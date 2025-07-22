@@ -47,11 +47,20 @@ class DBHelper:
         await self.engine.dispose()
         log.info("Соединение с базой данных закрыто.")
 
-    async def get_async_session(
+    async def get_async_session_without_commit(
         self,
     ) -> AsyncGenerator[AsyncSession, None]:
         """
         Возвращает сессию для асинхронной работы с базой данных.
+        """
+        async with self.session_factory() as session:  # type: AsyncSession
+            yield session
+
+    async def get_async_session_with_commit(
+        self,
+    ) -> AsyncGenerator[AsyncSession, None]:
+        """
+        Возвращает сессию для асинхронной работы с базой данных и делает коммит.
         """
         async with self.session_factory() as session:  # type: AsyncSession
             yield session

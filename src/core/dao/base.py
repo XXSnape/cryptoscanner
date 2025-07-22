@@ -1,4 +1,3 @@
-
 import logging
 
 from core.models import Base
@@ -22,7 +21,9 @@ class BaseDAO[M: Base]:
         """
         self._session = session
         if self.model is None:
-            raise ValueError("Модель должна быть указана в дочернем классе")
+            raise ValueError(
+                "Модель должна быть указана в дочернем классе"
+            )
 
     async def add(self, values: BaseModel) -> M:
         """
@@ -38,8 +39,11 @@ class BaseDAO[M: Base]:
             new_instance = self.model(**values_dict)
             self._session.add(new_instance)
             await self._session.flush()
-            logger.info("Запись %s успешно добавлена.", self.model.__name__)
+            logger.info(
+                "Запись %s успешно добавлена.", self.model.__name__
+            )
             return new_instance
         except SQLAlchemyError as e:
             await self._session.rollback()
             logger.error("Ошибка при добавлении записи %s", e)
+            raise
