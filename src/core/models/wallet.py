@@ -7,6 +7,9 @@ from .base import Base
 
 
 class Wallet(Base):
+    """
+    Модель для хранения информации о кошельке Tron.
+    """
     address: Mapped[str]
     balance_trx: Mapped[Decimal] = mapped_column(
         Numeric(

@@ -6,7 +6,9 @@ async def test_send_and_get_wallet_information(
     ac: AsyncClient,
     real_wallet_address: str,
 ) -> None:
-
+    """
+    Тестирование отправки и получения информации о кошельке.
+    """
     response = await ac.post(
         f"/wallets/{real_wallet_address}",
     )

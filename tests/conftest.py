@@ -31,6 +31,9 @@ FAKE_WALLET = "TULkcTBMUfxuXcmVMG6LVY6KQfiwtjH5E6"
 
 @pytest.fixture(scope="session", autouse=True)
 def check_env() -> None:
+    """
+    Проверяет наличие переменных окружения TEST_WALLET и API_KEY в файле .env.
+    """
     if not getenv("TEST_WALLET") or not getenv("API_KEY"):
         pytest.exit(
             "Для тестов в файл .env необходимо указать TEST_WALLET и API_KEY",
@@ -47,6 +50,9 @@ def real_wallet_address() -> str:
 
 @pytest.fixture(scope="session", autouse=True)
 async def init_db():
+    """
+    Инициализация тестовой базы данных перед запуском тестов
+    """
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)

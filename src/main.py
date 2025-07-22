@@ -20,6 +20,10 @@ logging.basicConfig(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    """
+    Устанавливает соединение с клиентом Tron при запуске приложения,
+    по завершении отключает соединение с базой данных.
+    """
 
     async with AsyncTron(
         AsyncHTTPProvider(api_key=settings.trongrid.api_key)

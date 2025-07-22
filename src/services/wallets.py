@@ -13,6 +13,9 @@ async def write_wallet_data(
     tron_client: AsyncTron,
     address: str,
 ) -> WalletSchema:
+    """
+    Делает запрос на получение данных о кошельке и записывает данные в базу данных.
+    """
 
     balance_trx, bandwidth, energy = await asyncio.gather(
         tron_client.get_account_balance(address),
@@ -36,6 +39,9 @@ async def get_wallet_data(
     page: int,
     per_page: int,
 ) -> WalletsInfoSchema:
+    """
+    Получает данные о кошельке из базы данных с пагинацией.
+    """
     items, total_count = await WalletDao(
         session=session
     ).get_paginated_data(

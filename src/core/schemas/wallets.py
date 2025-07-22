@@ -6,6 +6,9 @@ from datetime import datetime
 
 
 class WalletSchema(BaseModel):
+    """
+    Схема для представления информации о кошельке Tron.
+    """
     address: str
     balance_trx: Annotated[Decimal, Field(decimal_places=6)]
     bandwidth: int
@@ -14,6 +17,9 @@ class WalletSchema(BaseModel):
 
 
 class WalletsInfoSchema(BaseModel):
+    """
+    Схема для представления информации о кошельке за разные промежутки времени с пагинацией.
+    """
     items: list[WalletSchema]
     total_count: int
     page: int

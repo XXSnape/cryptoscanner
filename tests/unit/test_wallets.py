@@ -115,6 +115,9 @@ async def test_get_wallet_with_pagination(
     per_page: int | None,
     expected: dict,
 ) -> None:
+    """
+    Тестирование получения информации о кошельке с пагинацией.
+    """
     params = (
         {
             "page": page,
@@ -132,6 +135,9 @@ async def test_get_wallet_with_pagination(
 async def test_write_wallet_data(
     async_session: AsyncSession,
 ) -> None:
+    """
+    Тестирование записи данных о кошельке в базу данных.
+    """
     address = "TQguVRm3tDmZG7AeZ47Mk6qi6GTF1ZDqkZ"
     dao = WalletDao(session=async_session)
     await dao.add(

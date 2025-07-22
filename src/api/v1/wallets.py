@@ -36,6 +36,9 @@ async def send_wallet_information(
         Depends(get_tron_client),
     ],
 ):
+    """
+    Получает информацию о кошельке и сохраняет её в базу данных.
+    """
     try:
         return await write_wallet_data(
             session=session, tron_client=tron_client, address=address
@@ -87,6 +90,9 @@ async def get_wallet_information(
         ),
     ] = 10,
 ):
+    """
+    Получает информацию о кошельке с пагинацией.
+    """
     return await get_wallet_data(
         session=session,
         address=address,

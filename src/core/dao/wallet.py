@@ -17,6 +17,9 @@ class WalletDao(BaseDAO[Wallet]):
         page: int,
         per_page: int,
     ) -> tuple[Sequence[Wallet], int]:
+        """
+        Получает данные о кошельке с пагинацией.
+        """
         count_query = select(func.count()).where(
             self.model.address == address
         )
