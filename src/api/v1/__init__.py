@@ -1,5 +1,6 @@
-from core.config import settings
 from fastapi import APIRouter
+
+from core.config import settings
 
 from .wallets import router as complaints_router
 

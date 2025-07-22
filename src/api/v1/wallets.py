@@ -1,19 +1,16 @@
 import logging
 from typing import Annotated
 
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy.ext.asyncio import AsyncSession
 from tronpy import AsyncTron
 from tronpy.exceptions import AddressNotFound
 
 from core.dependencies.helper import db_helper
-
-
-from fastapi import APIRouter, Depends, status, HTTPException, Query
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.dependencies.tron import get_tron_client
 from core.schemas import WalletSchema
 from core.schemas.wallets import WalletsInfoSchema
-from services.wallets import write_wallet_data, get_wallet_data
+from services.wallets import get_wallet_data, write_wallet_data
 
 router = APIRouter(tags=["Wallets"])
 

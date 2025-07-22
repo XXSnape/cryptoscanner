@@ -1,9 +1,10 @@
 import logging
 
-from core.models import Base
 from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from core.models import Base
 
 logger = logging.getLogger(__name__)
 

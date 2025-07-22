@@ -3,7 +3,7 @@ from decimal import Decimal
 import httpx
 import pytest
 from httpx import AsyncClient
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.dao.wallet import WalletDao

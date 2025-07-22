@@ -1,10 +1,11 @@
 from typing import Sequence
 
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .base import BaseDAO
 from core.models import Wallet
+
+from .base import BaseDAO
 
 
 class WalletDao(BaseDAO[Wallet]):

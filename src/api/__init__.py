@@ -1,5 +1,6 @@
-from core.config import settings
 from fastapi import APIRouter
+
+from core.config import settings
 
 from .v1 import router as wallets_api_v1
 

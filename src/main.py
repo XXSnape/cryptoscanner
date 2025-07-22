@@ -3,14 +3,13 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 import uvicorn
+from fastapi import FastAPI
 from tronpy import AsyncTron
 from tronpy.providers import AsyncHTTPProvider
 
 from api import router as api_router
 from core.config import settings
 from core.dependencies.helper import db_helper
-
-from fastapi import FastAPI
 
 logging.basicConfig(
     level=settings.logging.log_level_value,

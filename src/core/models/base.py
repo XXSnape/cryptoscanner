@@ -1,6 +1,12 @@
-from core.config import settings
 from sqlalchemy import MetaData
-from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    Mapped,
+    declared_attr,
+    mapped_column,
+)
+
+from core.config import settings
 
 
 class Base(DeclarativeBase):
