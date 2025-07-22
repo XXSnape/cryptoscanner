@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -7,9 +8,7 @@ from pydantic_settings import (
     BaseSettings,
 )
 
-LOG_DEFAULT_FORMAT = (
-    "[%(asctime)s.%(msecs)03d] %(module)10s:%(lineno)-3d %(levelname)-7s - %(message)s"
-)
+LOG_DEFAULT_FORMAT = "[%(asctime)s.%(msecs)03d] %(module)10s:%(lineno)-3d %(levelname)-7s - %(message)s"
 
 load_dotenv()
 
@@ -55,8 +54,6 @@ class TrongridSettings(BaseSettings):
     api_key: str
 
 
-
-
 class ApiV1Prefix(BaseModel):
     """
     Префиксы для API версии 1.
@@ -95,7 +92,8 @@ class DatabaseConfig(BaseModel):
         """
         Возвращает строку для подключения к базе данных.
         """
-        return "sqlite+aiosqlite:///db.sqlite3"
+        base_dir = Path(__file__).resolve().parent.parent
+        return f"sqlite+aiosqlite:///{base_dir}/db.sqlite3"
 
 
 class Settings(BaseSettings):
