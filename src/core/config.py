@@ -50,7 +50,6 @@ class TrongridSettings(BaseSettings):
     Конфигурация для работы с TronGrid API.
     """
 
-    uri: str = "https://api.trongrid.io"
     api_key: str
 
 
@@ -92,7 +91,7 @@ class DatabaseConfig(BaseModel):
         """
         Возвращает строку для подключения к базе данных.
         """
-        base_dir = Path(__file__).resolve().parent.parent
+        base_dir = Path(__file__).resolve().parent.parent.parent
         return f"sqlite+aiosqlite:///{base_dir}/db.sqlite3"
 
 
