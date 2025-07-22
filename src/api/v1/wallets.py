@@ -7,12 +7,13 @@ from tronpy.exceptions import AddressNotFound
 from core.dependencies.helper import db_helper
 
 
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.dependencies.tron import get_tron_client
 from core.schemas import WalletSchema
-from services.wallets import write_wallet_data
+from core.schemas.wallets import WalletsInfoSchema
+from services.wallets import write_wallet_data, get_wallet_data
 
 router = APIRouter(tags=["Wallets"])
 
@@ -47,3 +48,38 @@ async def send_wallet_information(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Address not found or invalid.",
         )
+
+
+@router.get(
+    "/{address}",
+    response_model=WalletsInfoSchema,
+)
+async def get_wallet_information(
+    address: str,
+    session: Annotated[
+        AsyncSession,
+        Depends(db_helper.get_async_session_without_commit),
+    ],
+    page: Annotated[
+        int,
+        Query(
+            ge=1,
+            le=1_000_000,
+            description="Страница для пагинации (начиная с 1)",
+        ),
+    ] = 1,
+    per_page: Annotated[
+        int,
+        Query(
+            ge=1,
+            le=100,
+            description="Количество записей на странице (макс. 100)",
+        ),
+    ] = 10,
+):
+    return await get_wallet_data(
+        session=session,
+        address=address,
+        page=page,
+        per_page=per_page,
+    )
