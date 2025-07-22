@@ -107,7 +107,8 @@ async def override_get_async_session_without_commit() -> (
     AsyncGenerator[AsyncSession, None]
 ):
     """
-    Генерирует сессию для асинхронного взаимодействия с тестовой базой данных внутри приложения.
+    Генерирует сессию для асинхронного взаимодействия
+    с тестовой базой данных внутри приложения без коммита.
     """
     async with async_session_maker() as session:  # type: AsyncSession
         yield session
@@ -117,7 +118,8 @@ async def override_get_async_session_with_commit() -> (
     AsyncGenerator[AsyncSession, None]
 ):
     """
-    Генерирует сессию для асинхронного взаимодействия с тестовой базой данных внутри приложения.
+    Генерирует сессию для асинхронного взаимодействия
+    с тестовой базой данных внутри приложения c коммитом.
     """
     async with async_session_maker() as session:  # type: AsyncSession
         yield session

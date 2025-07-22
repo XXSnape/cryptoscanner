@@ -4,6 +4,7 @@ import httpx
 import pytest
 from httpx import AsyncClient
 from sqlalchemy import select, func
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.dao.wallet import WalletDao
 from core.models import Wallet
@@ -113,7 +114,7 @@ async def test_get_wallet_with_pagination(
     page: int | None,
     per_page: int | None,
     expected: dict,
-):
+) -> None:
     params = (
         {
             "page": page,
@@ -128,18 +129,19 @@ async def test_get_wallet_with_pagination(
     assert clean_date(response.json()) == expected
 
 
-async def test_write_wallet_data():
+async def test_write_wallet_data(
+    async_session: AsyncSession,
+) -> None:
     address = "TQguVRm3tDmZG7AeZ47Mk6qi6GTF1ZDqkZ"
-    async with async_session_maker() as session:
-        dao = WalletDao(session=session)
-        await dao.add(
-            WalletSchema(
-                address=address,
-                balance_trx=Decimal("234.00001"),
-                bandwidth=321,
-                energy=150,
-            ),
-        )
-        await session.commit()
-        q = select(func.count()).where(Wallet.address == address)
-        assert (await session.execute(q)).scalar_one() == 1
+    dao = WalletDao(session=async_session)
+    await dao.add(
+        WalletSchema(
+            address=address,
+            balance_trx=Decimal("234.00001"),
+            bandwidth=321,
+            energy=150,
+        ),
+    )
+    await async_session.commit()
+    q = select(func.count()).where(Wallet.address == address)
+    assert (await async_session.execute(q)).scalar_one() == 1
