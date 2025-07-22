@@ -23,6 +23,7 @@ log = logging.getLogger(__name__)
 @router.post(
     "/{address}",
     response_model=WalletSchema,
+    status_code=status.HTTP_201_CREATED,
 )
 async def send_wallet_information(
     address: str,

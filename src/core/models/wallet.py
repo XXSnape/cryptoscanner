@@ -8,7 +8,12 @@ from .base import Base
 
 class Wallet(Base):
     address: Mapped[str]
-    balance_trx: Mapped[Decimal] = mapped_column(Numeric())
+    balance_trx: Mapped[Decimal] = mapped_column(
+        Numeric(
+            scale=6,
+            decimal_return_scale=6,
+        )
+    )
     bandwidth: Mapped[int]
     energy: Mapped[int]
     date_and_time: Mapped[datetime] = mapped_column(
