@@ -9,3 +9,9 @@ uvicorn = {extras = ["standard"], version = "^0.35.0"}
 alembic = "^1.16.4"
 tronpy = "^0.6.1"
 aiosqlite = "^0.21.0"
+
+[tool.poetry.group.lint.dependencies]
+black = "^25.1.0"
+isort = "^6.0.1"
+flake8 = "^7.3.0"
+
