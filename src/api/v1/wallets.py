@@ -42,12 +42,21 @@ async def send_wallet_information(
         )
 
     except (ValueError, AddressNotFound):
-        log.exception(
+        log.error(
             "Не удалось получить информацию о кошельке %r", address
         )
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Address not found or invalid.",
+        )
+    except Exception:
+        log.exception(
+            "Не удалось получить информацию о кошельке %r по внутренней ошибке",
+            address,
+        )
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="INTERNAL SERVER ERROR.",
         )
 
 
